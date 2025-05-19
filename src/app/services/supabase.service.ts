@@ -35,6 +35,23 @@ export class SupabaseService {
     return this.supabase.auth.getUser();
   }
 
+  getMessages() {
+    return this.supabase
+      .from('chats')
+      .select('*')
+      .order('timestamp', { ascending: true });
+  }
+  
+  addMessage(user: string, text: string) {
+    return this.supabase
+      .from('chats')
+      .insert([{ user, text, timestamp: new Date().toISOString() }]);
+  }
+  
+  getCurrentUser() {
+    return this.supabase.auth.getUser();
+  }
+
   insertUserData(data: {
     uid: string;
     nombre: string;

@@ -1,3 +1,40 @@
-<p>home works!</p>
+<div class="home-container">
+    <div class="games">
+        <div class="icon" [ngClass]="{'dimmed': !isLoggedIn}"
+            (click)="isLoggedIn ? navegarAGrupo('preguntados') : null">
+            <img src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//preguntados-removebg-preview.png" alt="Icono 1" />
+            <label>Preguntados</label>
+        </div>
+        <div class="icon" [ngClass]="{'dimmed': !isLoggedIn}" (click)="isLoggedIn ? navegarAGrupo('ahorcado') : null">
+            <img src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//ahorcado.png"
+                alt="Icono 2" />
+            <label>Ahorcado</label>
+        </div>
+        <div class="icon" [ngClass]="{'dimmed': !isLoggedIn}"
+            (click)="isLoggedIn ? navegarAGrupo('mayor-menor') : null">
+            <img src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//mayormenor-removebg-preview.png" alt="Icono 3" />
+            <label>Mayor o Menor</label>
+        </div>
+        <div class="icon" [ngClass]="{'dimmed': !isLoggedIn}" (click)="isLoggedIn ? navegarAGrupo('gameThrones') : null">
+            <img src="" alt="Icono 4" />
+            <label>Juego de game of thrones</label>
+        </div>
+    </div>
 
-<button (click)="salir()">Cerrar sesión</button>
+    <div *ngIf="!isLoggedIn" class="mensaje-sesion">
+        <label>INICIÁ SESIÓN PARA JUGAR</label>
+    </div>
+
+    <div *ngIf="isLoggedIn" class="chat-container">
+        <h3>Chat</h3>
+        <div class="chat-messages">
+            <div *ngFor="let msg of messages" class="message">
+              <strong>{{ msg.user }}</strong> <span class="hora">[{{ msg.timestamp }}]</span>: {{ msg.text }}
+            </div>
+          </div>
+        <div class="input-container">
+            <input type="text" [(ngModel)]="message" placeholder="Escribe tu mensaje" />
+            <button (click)="sendMessage()">Enviar</button>
+        </div>
+    </div>
+</div>
