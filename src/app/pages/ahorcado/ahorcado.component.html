@@ -1,0 +1,60 @@
+<div class="ahorcado-container">
+  <div class="contenido-flex">
+
+    <div class="juego">
+      <div>
+        <h4>Adivina la palabra:</h4>
+        <p class="palabra">{{ obtenerPalabraConGuiones() }}</p>
+      </div>
+
+      <div class="letras">
+        <h4>Selecciona una letra:</h4>
+        <div class="letras-grid">
+          <button *ngFor="let letra of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')" (click)="seleccionarLetra(letra)">
+            {{ letra }}
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="letrasSeleccionadas.length > 0" class="letras-seleccionadas">
+        <h4>Letras seleccionadas:</h4>
+        <p>{{ letrasSeleccionadas.join(', ') }}</p>
+      </div>
+
+      <div *ngIf="juegoTerminado" class="mensaje-final">
+        <p>{{ mensajeResultado }}</p>
+        <button (click)="getRandomWord()" class="btn-reintentar">JUGAR OTRA VEZ</button>
+      </div>
+
+      <div class="intentos">
+        <h4>Intentos restantes: {{ intentosRestantes }}</h4>
+      </div>
+
+      <div class="puntos">
+        <h4>Puntos: {{ puntos }}</h4>
+      </div>
+
+
+      <div class="ranking-container">
+        <h3>TOP 5:</h3>
+        <ul>
+          <li *ngFor="let jugador of mejoresJugadores">
+            {{ jugador.nombre }} - {{ jugador.puntos }} puntos
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="image-container">
+      <img *ngIf="intentosRestantes === 6" src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//cuerda.png" alt="Cuerda">
+      <img *ngIf="intentosRestantes === 5" src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//cabeza.png" alt="Cabeza">
+      <img *ngIf="intentosRestantes === 4" src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//torso.png" alt="Torso">
+      <img *ngIf="intentosRestantes === 3" src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//brazo1.png" alt="Brazo Izquierdo">
+      <img *ngIf="intentosRestantes === 2" src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//brazo2.png" alt="Brazo Derecho">
+      <img *ngIf="intentosRestantes === 1" src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//pierna1.png" alt="Pierna Izquierda">
+      <img *ngIf="intentosRestantes === 0" src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//cuerpo.png" alt="Cuerpo Entero">
+    </div>
+
+  </div>
+</div>

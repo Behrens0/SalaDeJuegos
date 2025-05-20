@@ -3,6 +3,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/quienSoy/about.component';
+import { AhorcadoComponent } from './pages/ahorcado/ahorcado.component';
 
 
 export const routes: Routes = [{
@@ -15,5 +16,6 @@ export const routes: Routes = [{
 {
     path: "home", component: HomeComponent
 },
-{ path: 'about', component: AboutComponent }
+{ path: 'about', component: AboutComponent },
+{ path: 'ahorcado', component: AhorcadoComponent }
 ];

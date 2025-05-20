@@ -32,6 +32,10 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     try {
+      this.supabase.isLoggedIn$.subscribe((status) => {
+        this.isLoggedIn = status;
+      });
+  
       const { data, error } = await this.supabase.getUser();
       if (data.user) {
         this.isLoggedIn = true;
