@@ -1,0 +1,38 @@
+<div class="mayor-o-menor-container">
+    <h2>MAYOR O MENOR</h2>
+  
+    <div class="contenido-flex">
+      <div class="juego">
+  
+        <!-- Botones a los lados de la carta -->
+        <div class="botones-laterales">
+          <button class="mayor" (click)="verificarRespuesta('mayor')">⬆</button>
+  
+          <div class="carta-actual">
+            <img [src]="cartaActual.imagen" alt="Carta Actual" />
+          </div>
+  
+          <button class="menor" (click)="verificarRespuesta('menor')">⬇</button>
+        </div>
+  
+        <div class="puntaje">
+          Puntaje: {{ puntaje }}
+        </div>
+  
+        <div class="mensaje-final">
+          {{ mensaje }}
+        </div>
+      </div>
+  
+      <!-- Ranking -->
+      <div class="ranking-container">
+        <h3>TOP 5:</h3>
+        <ul>
+          <li *ngFor="let jugador of mejoresJugadores">
+            {{ jugador.nombre }} - {{ jugador.puntos }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  

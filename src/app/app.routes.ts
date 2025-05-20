@@ -4,6 +4,7 @@ import { RegistroComponent } from './pages/registro/registro.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/quienSoy/about.component';
 import { AhorcadoComponent } from './pages/ahorcado/ahorcado.component';
+import { MayorOMenorComponent } from './pages/mayor-o-menor/mayor-o-menor.component';
 
 
 export const routes: Routes = [{
@@ -17,5 +18,6 @@ export const routes: Routes = [{
     path: "home", component: HomeComponent
 },
 { path: 'about', component: AboutComponent },
-{ path: 'ahorcado', component: AhorcadoComponent }
+{ path: 'ahorcado', component: AhorcadoComponent },
+{ path: 'mayor-menor', component: MayorOMenorComponent }
 ];

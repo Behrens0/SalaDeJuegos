@@ -29,11 +29,12 @@
 }
 
 .icon img {
-    width: 250px;
+    width: 300px;
     height: 250px;
     transition: opacity 0.3s ease;
     border-radius: 10px;
 }
+
 
 .dimmed img {
     opacity: 0.5;
