@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../services/supabase.service';
+import { PreguntasService } from '../../services/preguntas.service';
 
 @Component({
   selector: 'app-preguntados',
@@ -21,7 +22,7 @@ export class PreguntadosComponent implements OnInit {
 
   apiKey: string = "$2b$12$OZ1B9NpVbw6wD1FV9xDKA.JMbZxZUvSLQtdHTxn/Vompf8IkMrLU2";
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(private supabaseService: SupabaseService,  private preguntasService: PreguntasService) {}
 
   ngOnInit() {
     this.cargarPreguntas();
@@ -29,27 +30,15 @@ export class PreguntadosComponent implements OnInit {
   }
 
   async cargarPreguntas() {
-    try {
-      const categorias = ['sports%26leisure', 'arts%26literature', 'geography'];
-      const promesas = categorias.map(cat =>
-        fetch(`https://api.quiz-contest.xyz/questions?limit=10&page=1&category=${cat}`, {
-          headers: { 'Authorization': this.apiKey }
-        })
-      );
-
-      const respuestas = await Promise.all(promesas);
-      if (respuestas.some(res => !res.ok)) {
-        throw new Error('Error al cargar preguntas de una o más categorías');
-      }
-
-      const datos = await Promise.all(respuestas.map(r => r.json()));
-      this.preguntas = datos.flatMap(d => d.questions);
-      this.preguntas = this.mezclarPreguntas(this.preguntas);
-      this.cambiarPregunta();
-    } catch (err: unknown) {
-      this.mensaje = `Error al cargar preguntas: ${(err instanceof Error) ? err.message : 'Error desconocido'}`;
-    }
+  try {
+    const categorias = ['sports%26leisure', 'arts%26literature', 'geography'];
+    this.preguntas = this.mezclarPreguntas(await this.preguntasService.obtenerPreguntas(categorias));
+    this.cambiarPregunta();
+  } catch (err: unknown) {
+    this.mensaje = `Error al cargar preguntas: ${(err instanceof Error) ? err.message : 'Error desconocido'}`;
   }
+}
+
 
   mezclarPreguntas(preguntas: any[]): any[] {
     return preguntas.sort(() => Math.random() - 0.5);

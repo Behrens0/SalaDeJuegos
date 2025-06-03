@@ -3,7 +3,7 @@
       <button routerLink="home" routerLinkActive="active-route">INICIO</button>
       <button routerLink="about" routerLinkActive="active-route">¿QUIÉN SOY?</button>
       <button *ngIf="isLoggedIn" routerLink="encuesta" routerLinkActive="active-route">ENCUESTA</button>
-      <button routerLink="rankings" routerLinkActive="active-route">RESULTADOS</button>
+      <button *ngIf="isLoggedIn" routerLink="rankings" routerLinkActive="active-route">RESULTADOS</button>
   </div>
   <div class="login-button-container" *ngIf="!isLoggedIn">
       <button routerLink="login" routerLinkActive="active-route">INICIAR SESION</button>
