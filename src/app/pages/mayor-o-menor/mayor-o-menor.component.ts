@@ -4,10 +4,10 @@ import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-mayor-o-menor',
-  standalone: true,
+  standalone: false,
   templateUrl: './mayor-o-menor.component.html',
   styleUrls: ['./mayor-o-menor.component.css'],
-  imports: [CommonModule, NgFor]
+
 })
 export class MayorOMenorComponent {
   cartaActual!: any;
@@ -57,7 +57,7 @@ export class MayorOMenorComponent {
 
     if (esCorrecto) {
       this.mensaje = '¡CORRECTO! SEGUÍ SUMANDO PUNTOS';
-      this.puntaje = 1;
+      this.puntaje =  this.puntaje + 1;
     } else {
       this.puntaje = 0
       this.mensaje = `¡NOO! La carta era: ${this.siguienteCarta.valor} de ${this.siguienteCarta.palo}`;
@@ -78,7 +78,7 @@ export class MayorOMenorComponent {
     const correoUsuario = await this.obtenerCorreoUsuario();
 
     if (correoUsuario) {
-      const { error } = await this.supabaseService.guardarResultadoRanking(correoUsuario, this.puntaje);
+      const { error } = await this.supabaseService.guardarResultadoRanking2(correoUsuario, this.puntaje);
 
       if (error) {
         console.error('Error al guardar el resultado:', error);
@@ -94,7 +94,7 @@ export class MayorOMenorComponent {
   }
 
   async obtenerRanking() {
-    const { data, error } = await this.supabaseService.obtenerTopRanking(5);
+    const { data, error } = await this.supabaseService.obtenerTopRanking2(5);
 
     if (error) {
       console.error('Error al obtener ranking:', error);

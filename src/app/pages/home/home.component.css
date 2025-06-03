@@ -72,8 +72,8 @@ label {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 320px;
-    height: 420px;
+    width: 620px;
+    height: 430px;
     overflow: hidden;
     border-radius: 12px;
     padding: 15px;
@@ -139,7 +139,6 @@ label {
     margin: 5px 0;
     padding: 6px 10px;
     border-radius: 6px;
-    background-color: #e1bee7; /* Violeta suave */
     max-width: 90%;
     align-self: flex-start;
     font-size: 14px;
@@ -150,3 +149,26 @@ label {
     font-size: 12px;
     margin-left: 5px;
   }
+
+  .own-message {
+    background-color: #c8e6c9; /* Verde claro */
+    align-self: flex-start;
+    text-align: left;
+}
+
+.other-message {
+    background-color: #e1bee7; /* Violeta suave */
+    align-self: flex-end;
+    text-align: right;
+}
+
+.fecha-separador {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+  background-color: #e0e0e0;
+  padding: 4px 8px;
+  border-radius: 8px;
+}

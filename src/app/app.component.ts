@@ -8,16 +8,7 @@ import { SupabaseService } from './services/supabase.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    CommonModule,
-    LoginComponent,
-    RegistroComponent,
-    HomeComponent
-  ],
+  standalone: false,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

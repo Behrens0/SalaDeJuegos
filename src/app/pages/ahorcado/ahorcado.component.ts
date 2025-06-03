@@ -5,8 +5,7 @@ import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-ahorcado',
-  standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  standalone: false,
   templateUrl: './ahorcado.component.html',
   styleUrls: ['./ahorcado.component.css']
 })
@@ -124,14 +123,13 @@ export class AhorcadoComponent {
         if (this.intentosRestantes === 0) {
           this.juegoTerminado = true;
           this.mensajeResultado = 'PERDISTE. La palabra era: ' + this.palabraSecreta;
-          this.puntos = 0;
         }
       }
 
       if (this.haGanado()) {
         this.juegoTerminado = true;
-        this.mensajeResultado = '¡EXCELENTE! Sumaste 1 punto';
-        this.puntos = 1;
+        this.mensajeResultado = '¡EXCELENTE! Sumaste 5 puntos';
+        this.puntos += 5;
       }
 
       if (this.juegoTerminado) {

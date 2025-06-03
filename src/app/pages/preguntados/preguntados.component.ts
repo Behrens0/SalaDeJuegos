@@ -4,8 +4,7 @@ import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-preguntados',
-  standalone: true,
-  imports: [CommonModule],
+  standalone: false,
   templateUrl: './preguntados.component.html',
   styleUrls: ['./preguntados.component.css']
 })

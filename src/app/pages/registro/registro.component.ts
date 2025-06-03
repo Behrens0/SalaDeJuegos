@@ -6,8 +6,7 @@ import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-registro',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
+  standalone: false,
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })

@@ -1,0 +1,46 @@
+<form (ngSubmit)="onSubmit()">
+    <div class="titulo">Encuesta</div>
+
+    <div>
+        <label for="nombre">Nombre y Apellido:</label>  
+        <input type="text" [(ngModel)]="nombre" id="nombre" name="nombre" />
+    </div>
+
+    <div>
+        <label for="edad">Edad:</label>
+        <input type="number" [(ngModel)]="edad" id="edad" name="edad" />
+    </div>
+
+    <div>
+        <label for="telefono">Número de Teléfono:</label>
+        <input type="text" [(ngModel)]="telefono" id="telefono" name="telefono" />
+    </div>
+
+    <div>
+        <label>¿Te parece que la página podría ser mejorada?</label>
+        <input type="radio" [(ngModel)]="pregunta1" value="Sí" name="pregunta1" /> Sí
+        <input type="radio" [(ngModel)]="pregunta1" value="No" name="pregunta1" /> No
+    </div>
+
+    <div>
+        <label>De los siguientes juegos, elegí cuales tuvieron el sistema de puntos mas divertido</label>
+        <input type="checkbox" (change)="seleccionDeJuego('Ahorcado')" [checked]="juegoSeleccionado.includes('Ahorcado')" /> Ahorcado
+        <input type="checkbox" (change)="seleccionDeJuego('Preguntados')" [checked]="juegoSeleccionado.includes('Preguntados')" /> Preguntados
+        <input type="checkbox" (change)="seleccionDeJuego('Word Game')" [checked]="juegoSeleccionado.includes('Game Of Thrones')" /> Word Game
+        <input type="checkbox" (change)="seleccionDeJuego('Mayor o Menor')" [checked]="juegoSeleccionado.includes('Mayor o Menor')" /> Mayor o Menor
+    </div>
+    <div>
+        <label for="pregunta3">Elegí tus juego favorito</label>
+        <select [(ngModel)]="pregunta3" id="pregunta3" name="pregunta3">
+            <option value="" disabled>Selecciona tu juego favorito</option>
+            <option value="Ahorcado">Ahorcado</option>
+            <option value="Preguntados">Preguntados</option>
+            <option value="gameOfThrones">gameOfThrones</option>
+            <option value="Mayor o Menor">Mayor o Menor</option>
+        </select>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-messedad">{{ errorMessage }}</div>
+
+    <button type="submit">Enviar</button>
+</form>

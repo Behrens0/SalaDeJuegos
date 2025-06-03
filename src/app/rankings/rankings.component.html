@@ -1,0 +1,45 @@
+<div class="contenedor">
+  <h1 class="titulo">Ranking General de Juegos</h1>
+
+  <div class="ranking-juego" *ngFor="let ranking of rankingsPorJuego">
+    <h2 class="subtitulo">{{ ranking.titulo }}</h2>
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Puesto</th>
+          <th>Correo</th>
+          <th>Puntos</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let jugador of ranking.datos; let i = index">
+          <td>#{{ i + 1 }}</td>
+          <td>{{ jugador.correo }}</td>
+          <td>{{ jugador.puntos }}</td>
+          <td>{{ jugador.fecha | date: 'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ranking-general">
+    <h2 class="subtitulo">Ranking General</h2>
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Puesto</th>
+          <th>Correo</th>
+          <th>Total Puntos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let jugador of rankingGeneral; let i = index">
+          <td>#{{ i + 1 }}</td>
+          <td>{{ jugador.correo }}</td>
+          <td>{{ jugador.puntos }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

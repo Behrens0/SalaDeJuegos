@@ -10,9 +10,14 @@
       <div class="letras">
         <h4>Selecciona una letra:</h4>
         <div class="letras-grid">
-          <button *ngFor="let letra of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')" (click)="seleccionarLetra(letra)">
-            {{ letra }}
-          </button>
+       <button
+          *ngFor="let letra of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')"
+          (click)="seleccionarLetra(letra)"
+          [disabled]="letrasSeleccionadas.includes(letra)"
+          [ngClass]="{ 'letra-usada': letrasSeleccionadas.includes(letra) }"
+        >
+          {{ letra }}
+      </button>
         </div>
       </div>
 
@@ -55,6 +60,8 @@
       <img *ngIf="intentosRestantes === 1" src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//pierna1.png" alt="Pierna Izquierda">
       <img *ngIf="intentosRestantes === 0" src="https://lyotopwjahfarqruzrts.supabase.co/storage/v1/object/public/tomas//cuerpo.png" alt="Cuerpo Entero">
     </div>
-
+    <button (click)="finalizarJuego()" class="btn-finalizar" *ngIf="!juegoTerminado">
+  Finalizar juego
+</button>
   </div>
 </div>

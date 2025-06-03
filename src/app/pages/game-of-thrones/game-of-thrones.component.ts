@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../services/supabase.service';
 @Component({
   selector: 'app-game-of-thrones',
-  standalone: true,
-  imports: [CommonModule],
+  standalone: false,
   templateUrl: './game-of-thrones.component.html',
   styleUrls: ['./game-of-thrones.component.css']
 })

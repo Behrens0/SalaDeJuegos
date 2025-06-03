@@ -7,8 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class SupabaseService {
   private supabase: SupabaseClient;
-
-  // Estado reactivo de login
+  
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
@@ -30,6 +29,30 @@ export class SupabaseService {
     }
     return result;
   }
+  listenToMessages(callback: (payload: any) => void) {
+  console.log('Suscribiéndose a mensajes nuevos en la tabla chats...');
+  return this.supabase
+    .channel('public:chats')
+    .on(
+      'postgres_changes',
+      {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'chats',
+      },
+      (payload) => {
+        console.log('Nuevo mensaje recibido en listenToMessages:', payload);
+        if (payload && payload.new) {
+          console.log('Datos del nuevo mensaje:', payload.new);
+        } else {
+          console.warn('Payload sin propiedad new:', payload);
+        }
+        callback(payload);
+      }
+    )
+    .subscribe();
+}
+
 
   async signOut() {
     const result = await this.supabase.auth.signOut();
@@ -68,25 +91,33 @@ export class SupabaseService {
     return this.supabase.auth.getUser();
   }
   async guardarResultadoRanking(correo: string, nuevosPuntos: number) {
-    const { data: usuarioActual, error: errorSelect } = await this.supabase
-      .from('ranking')
-      .select('score')
-      .eq('correo', correo)
-      .single();
-  
-    if (errorSelect && errorSelect.code !== 'PGRST116') {
-      return { data: null, error: errorSelect };
-    }
-  
-    const puntosTotales =
-      (parseInt(usuarioActual?.score ?? '0', 10)) + nuevosPuntos;
-  
-    const { data, error } = await this.supabase
-      .from('ranking')
-      .upsert({ correo, score: puntosTotales.toString() }, { onConflict: 'correo' });
-  
-    return { data, error };
-  }
+  const { data, error } = await this.supabase
+    .from('ranking')
+    .insert([
+      {
+        correo,
+        score: nuevosPuntos.toString(), // o directamente `nuevosPuntos` si el campo es tipo integer
+        fecha: new Date().toISOString() // opcional, si querés guardar cuándo se jugó
+      }
+    ]);
+
+  return { data, error };
+}
+
+  async guardarResultadoRanking2(correo: string, nuevosPuntos: number) {
+  const { data, error } = await this.supabase
+    .from('ranking_mayor_menor')
+    .insert([
+      {
+        correo,
+        score: nuevosPuntos.toString(), // o directamente `nuevosPuntos` si el campo es tipo integer
+        fecha: new Date().toISOString() // opcional, si querés guardar cuándo se jugó
+      }
+    ]);
+
+  return { data, error };
+}
+
   
   insertPuntajePreguntados(data: { correo: string; puntaje: number; fecha: string }) {
   return this.supabase.from('ranking_preguntados').insert([data]);
@@ -101,6 +132,8 @@ export class SupabaseService {
       .limit(limit);
   }
 
+  
+
   async obtenerTopRanking(limit: number = 5) {
     return this.supabase
       .from('ranking')
@@ -109,7 +142,14 @@ export class SupabaseService {
       .limit(limit);
   }
 
-  // Guarda el puntaje del juego de Game of Thrones
+  async obtenerTopRanking2(limit: number = 5) {
+    return this.supabase
+      .from('ranking_mayor_menor')
+      .select('correo, score')
+      .order('score', { ascending: false })
+      .limit(limit);
+  }
+
 async insertPuntajeThrones(puntaje: number) {
   const correo = await this.getUserEmail();
 
@@ -118,8 +158,13 @@ async insertPuntajeThrones(puntaje: number) {
     .insert([{ correo, puntaje, fecha: new Date().toISOString() }]);
 }
 
+guardarEncuesta(encuestaData: any) {
+  return this.supabase
+    .from('encuesta')
+    .insert([encuestaData]);
+}
 
-// Obtener los 5 mejores puntajes
+
 getTopThronesRanking(limit: number = 5) {
   return this.supabase
     .from('ranking_thrones')
@@ -128,7 +173,6 @@ getTopThronesRanking(limit: number = 5) {
     .limit(limit);
 }
 
-// Obtener el email del usuario actual
 private async getUserEmail(): Promise<string> {
   const { data, error } = await this.supabase.auth.getUser();
   return data?.user?.email || 'Anónimo';

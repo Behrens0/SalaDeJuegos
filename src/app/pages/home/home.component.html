@@ -28,12 +28,17 @@
     <div *ngIf="isLoggedIn" class="chat-container">
         <h3>Chat</h3>
         <div class="chat-messages">
-            <div *ngFor="let msg of messages" class="message">
-              <strong>{{ msg.user }}</strong> <span class="hora">[{{ msg.timestamp }}]</span>: {{ msg.text }}
-            </div>
+          <div *ngFor="let msg of messages; let i = index" class="message" [ngClass]="{'own-message': msg.user === username, 'other-message': msg.user !== username}">
+             <div *ngIf="isNewDay(i)" class="fecha-separador">
+            {{ formatDate(msg.timestamp) }}
+  </div>
+        <strong>{{ msg.user }}</strong> 
+        <span class="hora">[{{ msg.timestamp }}]</span>: {{ msg.text }}
+        </div>
+
           </div>
         <div class="input-container">
-            <input type="text" [(ngModel)]="message" placeholder="Escribe tu mensaje" />
+            <input type="text" [(ngModel)]="message" placeholder="Escribe tu mensaje" (keyup.enter)="sendMessage()" />
             <button (click)="sendMessage()">Enviar</button>
         </div>
     </div>

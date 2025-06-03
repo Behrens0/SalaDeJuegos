@@ -2,6 +2,8 @@
   <div class="button-group">
       <button routerLink="home" routerLinkActive="active-route">INICIO</button>
       <button routerLink="about" routerLinkActive="active-route">¿QUIÉN SOY?</button>
+      <button *ngIf="isLoggedIn" routerLink="encuesta" routerLinkActive="active-route">ENCUESTA</button>
+      <button routerLink="rankings" routerLinkActive="active-route">RESULTADOS</button>
   </div>
   <div class="login-button-container" *ngIf="!isLoggedIn">
       <button routerLink="login" routerLinkActive="active-route">INICIAR SESION</button>
@@ -18,8 +20,5 @@
 <router-outlet></router-outlet>
 </div>
 
-<div class="form-container">
-  <app-registro *ngIf="router.url === '/registro'" (loginStatusChange)="setLoginStatus($event)"></app-registro>
-  <app-login *ngIf="router.url === '/login'" (loginStatusChange)="setLoginStatus($event)"></app-login>
-</div>
+
 
